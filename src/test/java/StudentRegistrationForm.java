@@ -3,6 +3,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 
+import static com.codeborne.selenide.Condition.cssValue;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -17,11 +18,9 @@ public class StudentRegistrationForm {
     }
 
     @Test
-    void fillRegistrationFormTest() {
+    void fillFullRegistrationFormTest() {
         open("/automation-practice-form");
 
-        executeJavaScript("$('footer').remove();");
-        executeJavaScript("$('#fixedban').remove();");
 
         //Заполнение формы
         $("#firstName").setValue("Test");
@@ -30,7 +29,7 @@ public class StudentRegistrationForm {
         $(byText("Male")).click();
         $("#userNumber").setValue("8961530834");
 
-        $("#dateOfBirthInput").clear();
+        $("#dateOfBirthInput").click();
         $(".react-datepicker__month-select").selectOption("April");
         $(".react-datepicker__year-select").selectOption("2002");
         $$(".react-datepicker__day").findBy(text("30")).click();
@@ -61,5 +60,66 @@ public class StudentRegistrationForm {
         $(".table-responsive").shouldHave(text("test.jpg"));
         $(".table-responsive").shouldHave(text("Current test address"));
         $(".table-responsive").shouldHave(text("Uttar Pradesh Agra"));
+    }
+
+    @Test
+    void fillOnlyNecessaryFieldsRegistrationFormTest() {
+        open("/automation-practice-form");
+
+        //Заполнение формы
+        $("#firstName").setValue("Test");
+        $("#lastName").setValue("TestLastName");
+        $(byText("Female")).click();
+        $("#userNumber").setValue("8961530834");
+        $("#submit").scrollTo().click();
+
+        //Проверка заполнения
+        $(".table-responsive").shouldHave(text("Test TestLastName"));
+        $(".table-responsive").shouldHave(text("Female"));
+        $(".table-responsive").shouldHave(text("8961530834"));
+    }
+
+    @Test
+    void fillWithoutFirstNameFieldRegistrationFormTest() {
+        open("/automation-practice-form");
+
+        //Заполнение формы
+        $("#lastName").setValue("TestLastName");
+        $(byText("Female")).click();
+        $("#userNumber").setValue("8961530834");
+        $("#submit").scrollTo().click();
+
+        //Проверка ошибки
+        $("#firstName").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+    }
+
+    @Test
+    void fillWithoutLastNameFieldRegistrationFormTest() {
+        open("/automation-practice-form");
+
+        //Заполнение формы
+        $("#firstName").setValue("TestFirstName");
+        $(byText("Female")).click();
+        $("#userNumber").setValue("8961530834");
+        $("#submit").scrollTo().click();
+
+        //Проверка ошибки
+        $("#lastName").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+    }
+
+    @Test
+    void fillInvalidEmailRegistrationFormTest() {
+        open("/automation-practice-form");
+
+        //Заполнение формы
+        $("#firstName").setValue("TestFirstName");
+        $("#lastName").setValue("TestLastName");
+        $("#userEmail").setValue("Test");
+        $(byText("Female")).click();
+        $("#userNumber").setValue("8961530834");
+        $("#submit").scrollTo().click();
+
+        //Проверка ошибки
+        $("#userEmail").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
     }
 }
