@@ -26,7 +26,7 @@ public class StudentRegistrationForm {
         $("#firstName").setValue("Test");
         $("#lastName").setValue("TestLastName");
         $("#userEmail").setValue("Test@test.ru");
-        $(byText("Male")).click();
+        $("#genterWrapper").$(byText("Male")).click();
         $("#userNumber").setValue("8961530834");
 
         $("#dateOfBirthInput").click();
@@ -34,15 +34,13 @@ public class StudentRegistrationForm {
         $(".react-datepicker__year-select").selectOption("2002");
         $$(".react-datepicker__day").findBy(text("30")).click();
 
-        $("#subjectsInput").setValue("Maths");
-        $$(".subjects-auto-complete__option").findBy(text("Maths")).click(); //. указывает, что это класс, а не тег, можно явно прописывать класс
+        $("#subjectsInput").setValue("Maths").pressEnter();
 
-
-        $(byText("Sports")).click();
+        $("#hobbiesWrapper").$(byText("Sports")).click();
         $("#uploadPicture").uploadFromClasspath("test.jpg");
         $("#currentAddress").setValue("Current test address");
 
-        $("#state").click();
+        $("#state").scrollTo().click();
         $(byText("Uttar Pradesh")).click();
         $("#city").click();
         $(byText("Agra")).click();
@@ -69,13 +67,13 @@ public class StudentRegistrationForm {
         //Заполнение формы
         $("#firstName").setValue("Test");
         $("#lastName").setValue("TestLastName");
-        $(byText("Female")).click();
+        $("#genterWrapper").$(byText("Male")).click();
         $("#userNumber").setValue("8961530834");
         $("#submit").scrollTo().click();
 
         //Проверка заполнения
         $(".table-responsive").shouldHave(text("Test TestLastName"));
-        $(".table-responsive").shouldHave(text("Female"));
+        $(".table-responsive").shouldHave(text("Male"));
         $(".table-responsive").shouldHave(text("8961530834"));
     }
 
@@ -85,7 +83,7 @@ public class StudentRegistrationForm {
 
         //Заполнение формы
         $("#lastName").setValue("TestLastName");
-        $(byText("Female")).click();
+        $("#genterWrapper").$(byText("Male")).click();
         $("#userNumber").setValue("8961530834");
         $("#submit").scrollTo().click();
 
@@ -99,7 +97,7 @@ public class StudentRegistrationForm {
 
         //Заполнение формы
         $("#firstName").setValue("TestFirstName");
-        $(byText("Female")).click();
+        $("#genterWrapper").$(byText("Male")).click();
         $("#userNumber").setValue("8961530834");
         $("#submit").scrollTo().click();
 
@@ -115,7 +113,7 @@ public class StudentRegistrationForm {
         $("#firstName").setValue("TestFirstName");
         $("#lastName").setValue("TestLastName");
         $("#userEmail").setValue("Test");
-        $(byText("Female")).click();
+        $("#genterWrapper").$(byText("Male")).click();
         $("#userNumber").setValue("8961530834");
         $("#submit").scrollTo().click();
 
